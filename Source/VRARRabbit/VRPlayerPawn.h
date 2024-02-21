@@ -24,6 +24,8 @@ public:
 	void MoveStarted();
 	UFUNCTION()
 	void MoveCompleted();
+	UFUNCTION()
+	void TurnStarted(double Input);
 	
 	UPROPERTY()
 	
@@ -55,6 +57,8 @@ public:
 	float TeleportSpeed = 650;
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Teleport Radius")
 	float TeleportRadius = 3.6;
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Amount to Turn")
+	float TurnSnappingAmount = -45;
 
 protected:
 	virtual void BeginPlay() override;

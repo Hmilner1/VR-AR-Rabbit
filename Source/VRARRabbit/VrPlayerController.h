@@ -19,6 +19,9 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Movement");
 	TObjectPtr<UInputAction> ActionMove = nullptr;
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Turn");
+	TObjectPtr<UInputAction> ActionTurn = nullptr;
+
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Movement");
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 	
@@ -26,6 +29,7 @@ protected:
 	void HandleStartMove(const FInputActionValue& InputActionValue);
 	void HandleTriggerMove(const FInputActionValue& InputActionValue);
 	void HandleCompletedTrigger(const FInputActionValue& InputActionValue);
+	void HandleTurn(const FInputActionValue& InputActionValue);
 	
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;

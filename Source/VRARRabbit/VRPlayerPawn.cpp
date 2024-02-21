@@ -95,9 +95,9 @@ void AVRPlayerPawn::MoveTriggered()
 	
 	if(ValidateTeleportPosition(HitResults))
 	{
-		TeleportVisual->SetActorHiddenInGame(false);
+		//TeleportVisual->SetActorHiddenInGame(false);
 	}
-	TeleportVisual->SetActorLocation(ProjectedPoint);
+	//TeleportVisual->SetActorLocation(ProjectedPoint);
 	DrawLineTrace(ConvertedPath, ControllerWorldPosition); 
 	
 }
@@ -106,18 +106,16 @@ void AVRPlayerPawn::MoveStarted()
 {
 	NiagraComponentLineTrace->SetVisibility(true);
 	
-	TeleportVisual = GetWorld()->SpawnActor<AVRTeleportBase>(TeleportVisualActorComponent,
-		RootComponent->GetComponentTransform());
-	TeleportVisual->SetActorHiddenInGame(true);
+	//TeleportVisual = GetWorld()->SpawnActor<AVRTeleportBase>(TeleportVisualActorComponent,
+	//	RootComponent->GetComponentTransform());
+	//TeleportVisual->SetActorHiddenInGame(true);
 }
 
 void AVRPlayerPawn::MoveCompleted()
 {
-	TeleportVisual->Destroy();
+	//TeleportVisual->Destroy();
 	NiagraComponentLineTrace->SetVisibility(false);
-
 	
-	//SetActorLocation(TeleportLocation);
 	if(ValidTeleportLocation)
 	{
 		FVector CamLocation = VrCamera->GetRelativeLocation();
@@ -129,10 +127,40 @@ void AVRPlayerPawn::MoveCompleted()
 		
 		FVector CameraPos = UKismetMathLibrary::GreaterGreater_VectorRotator(TempVector,ActorRotation);
 		TeleportLocation = UKismetMathLibrary::Subtract_VectorVector(TeleportLocation,CameraPos);
-		TeleportLocation.Z = TeleportLocation.Z + 100;
+		TeleportLocation.Z = TeleportLocation.Z + 60;
 		K2_TeleportTo(TeleportLocation,FRotator(0,ActorRotation.Yaw,0));
 	}
 }
+
+void AVRPlayerPawn::TurnStarted(double Input)
+{
+	bool TurningRight = false;
+	FVector LocalCameraLocation = VrCamera->GetComponentLocation();
+	FTransform LocalCameraTransform = VrCamera->GetRelativeTransform();
+	
+	if(Input > 0.0f)
+	{
+		TurningRight = true;
+	}
+	float NewYaw = UKismetMathLibrary::SelectFloat(UKismetMathLibrary::Abs(TurnSnappingAmount),
+		TurnSnappingAmount,
+		TurningRight);
+
+	FRotator NewRotation = UKismetMathLibrary::ComposeRotators(GetActorRotation(),
+		FRotator(0,NewYaw,0));
+	
+	FTransform NewTransform = UKismetMathLibrary::MakeTransform(GetActorLocation(),
+		NewRotation,
+		FVector(1,1,1));
+
+	FHitResult result;
+	K2_AddActorWorldRotation(FRotator(0,NewYaw,0),false,result,true);
+	FTransform ComposedTransform = UKismetMathLibrary::ComposeTransforms(LocalCameraTransform,NewTransform);
+	FVector SubtractedVector = UKismetMathLibrary::Subtract_VectorVector(LocalCameraLocation,ComposedTransform.GetLocation());
+	FVector NewTeleportLocation = UKismetMathLibrary::Add_VectorVector(SubtractedVector,GetActorLocation());
+	SetActorLocation(NewTeleportLocation);
+}
+
 
 void AVRPlayerPawn::DrawLineTrace(TArray<FVector> Path, FVector StartPos )
 {
@@ -156,18 +184,18 @@ bool AVRPlayerPawn::ValidateTeleportPosition(FPredictProjectilePathResult HitRes
 		nullptr,
 		nullptr,
 		query);
-
+	
 	TeleportLocation = ProjectedPoint;
-	ProjectedPoint.Z = ProjectedPoint.Z;
+	ProjectedPoint.Z = ProjectedPoint.Z + 8;
 	
 	if(ValidTeleportLocation)
 	{
-		TeleportVisual->SetActorHiddenInGame(false);
+		//TeleportVisual->SetActorHiddenInGame(false);
 		return true;
 	}
 	if(!ValidTeleportLocation)
 	{
-		TeleportVisual->SetActorHiddenInGame(true);
+		//TeleportVisual->SetActorHiddenInGame(true);
 	}
 	return false;
 }

@@ -27,6 +27,8 @@ void AVrPlayerController::OnPossess(APawn* aPawn)
 		VRInputController->BindAction(ActionMove, ETriggerEvent::Triggered, this, &AVrPlayerController::HandleTriggerMove);
 		VRInputController->BindAction(ActionMove, ETriggerEvent::Started, this, &AVrPlayerController::HandleStartMove);
 		VRInputController->BindAction(ActionMove, ETriggerEvent::Completed, this, &AVrPlayerController::HandleCompletedTrigger);
+		VRInputController->BindAction(ActionTurn, ETriggerEvent::Started, this, &AVrPlayerController::HandleTurn);
+
 	}
 	
 }
@@ -61,5 +63,14 @@ void AVrPlayerController::HandleCompletedTrigger(const FInputActionValue& InputA
 	if (VRPawn)
 	{
 		VRPawn->MoveCompleted();
+	}
+}
+
+void AVrPlayerController::HandleTurn(const FInputActionValue& InputActionValue)
+{
+	const double InputAmount = InputActionValue.Get<float>();
+	if (VRPawn)
+	{
+		VRPawn->TurnStarted(InputAmount);
 	}
 }
