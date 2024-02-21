@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"F:\\Masters\\Project 2 Unreal AR Game\\Rabbit Game\\VRARRabbit\\Source\\VRARRabbit\\VRARRabbit.Build.cs",
+		"F:\\Masters\\Project 2 Unreal AR Game\\Rabbit Game\\VRARRabbit\\Source\\VRARRabbit.Target.cs",
+		"F:\\Masters\\Project 2 Unreal AR Game\\Rabbit Game\\VRARRabbit\\Source\\VRARRabbitEditor.Target.cs"
+	],
+	"EngineVersion": "5.3.2"
+}

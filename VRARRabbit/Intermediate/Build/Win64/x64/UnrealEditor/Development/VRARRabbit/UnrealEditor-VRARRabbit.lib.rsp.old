@@ -1,0 +1,19 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-VRARRabbit.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\VRARRabbitEditor\Development\UnrealEd\SharedPCH.UnrealEd.Cpp20.InclOrderUnreal5_0.h.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\MyTestRabbit.gen.cpp.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\VRARRabbit.init.gen.cpp.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\VrPlayerController.gen.cpp.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\VRPlayerPawn.gen.cpp.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\MyTestRabbit.cpp.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\VRARRabbit.cpp.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\VrPlayerController.cpp.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\VRPlayerPawn.cpp.obj"
+"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\Default.rc2.res"
+/OUT:"F:\Masters\Project 2 Unreal AR Game\Rabbit Game\VRARRabbit\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRARRabbit\UnrealEditor-VRARRabbit.lib"

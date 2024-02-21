@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\masters\\project 2 unreal ar game\\rabbit game\\vrarrabbit\\source\\vrarrabbit\\vrarrabbit.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\masters\\project 2 unreal ar game\\rabbit game\\vrarrabbit\\intermediate\\build\\win64\\x64\\vrarrabbiteditor\\development\\unrealed\\sharedpch.unrealed.cpp20.inclorderunreal5_0.h.pch",
+        "Includes": [
+            "f:\\masters\\project 2 unreal ar game\\rabbit game\\vrarrabbit\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\vrarrabbit\\definitions.vrarrabbit.h",
+            "f:\\masters\\project 2 unreal ar game\\rabbit game\\vrarrabbit\\source\\vrarrabbit\\vrarrabbit.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

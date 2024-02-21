@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "VRARRabbit",
+			"Path": "..\\Source\\VRARRabbit.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "VRARRabbitEditor",
+			"Path": "..\\Source\\VRARRabbitEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
