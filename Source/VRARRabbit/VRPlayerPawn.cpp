@@ -14,7 +14,7 @@ AVRPlayerPawn::AVRPlayerPawn()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//sets up new root object
-	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("VR Origin"));
 	RootComponent = DummyRoot;
 
 	//sets up VR objects
@@ -129,6 +129,7 @@ void AVRPlayerPawn::MoveCompleted()
 		
 		FVector CameraPos = UKismetMathLibrary::GreaterGreater_VectorRotator(TempVector,ActorRotation);
 		TeleportLocation = UKismetMathLibrary::Subtract_VectorVector(TeleportLocation,CameraPos);
+		TeleportLocation.Z = TeleportLocation.Z + 100;
 		K2_TeleportTo(TeleportLocation,FRotator(0,ActorRotation.Yaw,0));
 	}
 }
@@ -157,7 +158,7 @@ bool AVRPlayerPawn::ValidateTeleportPosition(FPredictProjectilePathResult HitRes
 		query);
 
 	TeleportLocation = ProjectedPoint;
-	ProjectedPoint.Z = ProjectedPoint.Z- 8;
+	ProjectedPoint.Z = ProjectedPoint.Z;
 	
 	if(ValidTeleportLocation)
 	{
