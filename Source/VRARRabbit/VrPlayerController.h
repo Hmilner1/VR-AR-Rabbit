@@ -22,18 +22,24 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Turn");
 	TObjectPtr<UInputAction> ActionTurn = nullptr;
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Open Menu Left");
+	TObjectPtr<UInputAction> ActionMenuLeft = nullptr;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Open Menu Right");
+	TObjectPtr<UInputAction> ActionMenuRight = nullptr;
+
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Movement");
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
-	
 protected:
 	void HandleStartMove(const FInputActionValue& InputActionValue);
 	void HandleTriggerMove(const FInputActionValue& InputActionValue);
 	void HandleCompletedTrigger(const FInputActionValue& InputActionValue);
 	void HandleTurn(const FInputActionValue& InputActionValue);
-	
+	void HandleMenuLeft(const FInputActionValue& InputActionValue);
+	void HandleMenuRight(const FInputActionValue& InputActionValue);
+
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;
-	
 private:
 	UPROPERTY()
 	TObjectPtr<UEnhancedInputComponent> VRInputController = nullptr;
@@ -41,5 +47,4 @@ private:
 	TObjectPtr<AVRPlayerPawn> VRPawn = nullptr;
 	
 	GENERATED_BODY()
-	
 };

@@ -12,11 +12,9 @@
 AVRPlayerPawn::AVRPlayerPawn()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 	//sets up new root object
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("VR Origin"));
 	RootComponent = DummyRoot;
-
 	//sets up VR objects
 	MotionControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("RightMotionController"));
 	MotionControllerRight->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
@@ -24,20 +22,17 @@ AVRPlayerPawn::AVRPlayerPawn()
 	MotionControllerLeft->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
 	VrCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("VR Camera"));
 	VrCamera->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
-	
 }
 
 void AVRPlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
-
 	if(IsHMDEnabled())
 	{
 		UHeadMountedDisplayFunctionLibrary::SetTrackingOrigin(EHMDTrackingOrigin::Stage);
 		FString Command = "vr.PixelDensity 1.0";
 		UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(),Command);
 	}
-	
 	//Sets Up Line Trace
 	NiagraComponentLineTrace = UNiagaraFunctionLibrary::SpawnSystemAttached(NiagraLineTrace,
 		RootComponent, NAME_None, FVector(0.f),
@@ -48,14 +43,12 @@ void AVRPlayerPawn::BeginPlay()
 
 void AVRPlayerPawn::Tick(float DeltaTime)
 {
-	
 	Super::Tick(DeltaTime);
 }
 
 void AVRPlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 bool AVRPlayerPawn::IsHMDEnabled()
@@ -93,27 +86,16 @@ void AVRPlayerPawn::MoveTriggered()
 	TArray<FVector>ConvertedPath = ConvertPathDataArray(TracePath);
 	ConvertedPath.Insert(ControllerWorldPosition, 0);
 	
-	if(ValidateTeleportPosition(HitResults))
-	{
-		//TeleportVisual->SetActorHiddenInGame(false);
-	}
-	//TeleportVisual->SetActorLocation(ProjectedPoint);
-	DrawLineTrace(ConvertedPath, ControllerWorldPosition); 
-	
+	DrawLineTrace(ConvertedPath, ControllerWorldPosition);
 }
 
 void AVRPlayerPawn::MoveStarted()
 {
 	NiagraComponentLineTrace->SetVisibility(true);
-	
-	//TeleportVisual = GetWorld()->SpawnActor<AVRTeleportBase>(TeleportVisualActorComponent,
-	//	RootComponent->GetComponentTransform());
-	//TeleportVisual->SetActorHiddenInGame(true);
 }
 
 void AVRPlayerPawn::MoveCompleted()
 {
-	//TeleportVisual->Destroy();
 	NiagraComponentLineTrace->SetVisibility(false);
 	
 	if(ValidTeleportLocation)
@@ -161,7 +143,12 @@ void AVRPlayerPawn::TurnStarted(double Input)
 	SetActorLocation(NewTeleportLocation);
 }
 
+void AVRPlayerPawn::HandleMenu(bool RightHand)
+{
+	
+}
 
+//Uses Point Array from Projection to draw line trace
 void AVRPlayerPawn::DrawLineTrace(TArray<FVector> Path, FVector StartPos )
 {
 	FName pathname = "User.PointArray";
@@ -171,6 +158,7 @@ void AVRPlayerPawn::DrawLineTrace(TArray<FVector> Path, FVector StartPos )
 		Path); 
 }
 
+//navmesh used to validate the players teleport position
 bool AVRPlayerPawn::ValidateTeleportPosition(FPredictProjectilePathResult HitResults)
 {
 	UNavigationSystemV1* NavSys = UNavigationSystemV1::GetNavigationSystem(GetWorld());
@@ -186,29 +174,23 @@ bool AVRPlayerPawn::ValidateTeleportPosition(FPredictProjectilePathResult HitRes
 		query);
 	
 	TeleportLocation = ProjectedPoint;
+	//+8 to account navmesh height
 	ProjectedPoint.Z = ProjectedPoint.Z + 8;
 	
 	if(ValidTeleportLocation)
 	{
-		//TeleportVisual->SetActorHiddenInGame(false);
 		return true;
-	}
-	if(!ValidTeleportLocation)
-	{
-		//TeleportVisual->SetActorHiddenInGame(true);
 	}
 	return false;
 }
 
-
+//Get Location points from point data and adds it to an array for the line trace
 TArray<FVector> AVRPlayerPawn::ConvertPathDataArray(TArray<FPredictProjectilePathPointData> PathDataArray)
 {
 	TArray<FVector> ResultArray;
-
 	for (FPredictProjectilePathPointData PointData : PathDataArray)
 	{
 		ResultArray.Add(PointData.Location);
 	}
-
 	return ResultArray;
 }

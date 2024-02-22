@@ -4,9 +4,7 @@
 #include "VRTeleportBase.h"
 #include "GameFramework/Pawn.h"
 #include "Kismet/GameplayStaticsTypes.h"
-#include "Engine/GameViewportClient.h"
 #include "VRPlayerPawn.generated.h"
-
 
 class UCameraComponent;
 class UMotionControllerComponent;
@@ -26,11 +24,12 @@ public:
 	void MoveCompleted();
 	UFUNCTION()
 	void TurnStarted(double Input);
+	UFUNCTION()
+	void HandleMenu(bool RightHand);
+
 	
 	UPROPERTY()
-	
 	TObjectPtr<class USceneComponent> DummyRoot;
-
 	//VR Components
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Controller")
 	UMotionControllerComponent* MotionControllerRight;
@@ -38,17 +37,18 @@ public:
 	UMotionControllerComponent* MotionControllerLeft;
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Camera")
 	UCameraComponent* VrCamera;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Menu")
+	UCameraComponent* temp;
+
 	
 	//Player Bounds Actor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportActor")
 	UClass* TeleportVisualActorComponent;
 	UPROPERTY()
 	AVRTeleportBase* TeleportVisual;
-
 	//Line Trace
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Niagara")
 	UNiagaraSystem* NiagraLineTrace;
-
 	UPROPERTY()
 	UNiagaraComponent* NiagraComponentLineTrace;
 
@@ -67,20 +67,16 @@ protected:
 	FVector ProjectedPoint;
 	UPROPERTY()
 	FVector TeleportLocation;
-
 	UPROPERTY()
 	bool ValidTeleportLocation;
 	
 private:
 	UFUNCTION()
 	void DrawLineTrace(TArray<FVector> Path,FVector StartPos);
-
 	UFUNCTION()
 	TArray<FVector> ConvertPathDataArray(TArray<FPredictProjectilePathPointData> PathDataArray);
-
 	UFUNCTION()
 	bool ValidateTeleportPosition(FPredictProjectilePathResult HitResults);
-
 	UFUNCTION()
 	bool IsHMDEnabled();
 	
