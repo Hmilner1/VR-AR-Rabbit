@@ -35,8 +35,8 @@ protected:
 	void HandleTriggerMove(const FInputActionValue& InputActionValue);
 	void HandleCompletedTrigger(const FInputActionValue& InputActionValue);
 	void HandleTurn(const FInputActionValue& InputActionValue);
-	void HandleMenuLeft(const FInputActionValue& InputActionValue);
-	void HandleMenuRight(const FInputActionValue& InputActionValue);
+	void HandleMenu(const FInputActionValue& InputActionValue);
+	
 
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;

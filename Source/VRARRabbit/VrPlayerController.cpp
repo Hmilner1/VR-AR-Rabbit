@@ -28,8 +28,8 @@ void AVrPlayerController::OnPossess(APawn* aPawn)
 		VRInputController->BindAction(ActionMove, ETriggerEvent::Started, this, &AVrPlayerController::HandleStartMove);
 		VRInputController->BindAction(ActionMove, ETriggerEvent::Completed, this, &AVrPlayerController::HandleCompletedTrigger);
 		VRInputController->BindAction(ActionTurn, ETriggerEvent::Started, this, &AVrPlayerController::HandleTurn);
-		VRInputController->BindAction(ActionMenuLeft, ETriggerEvent::Started, this, &AVrPlayerController::HandleMenuLeft);
-		VRInputController->BindAction(ActionMenuRight, ETriggerEvent::Started, this, &AVrPlayerController::HandleMenuRight);
+		VRInputController->BindAction(ActionMenuLeft, ETriggerEvent::Started, this, &AVrPlayerController::HandleMenu);
+		VRInputController->BindAction(ActionMenuRight, ETriggerEvent::Started, this, &AVrPlayerController::HandleMenu);
 		
 	}
 }
@@ -76,18 +76,11 @@ void AVrPlayerController::HandleTurn(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AVrPlayerController::HandleMenuLeft(const FInputActionValue& InputActionValue)
+void AVrPlayerController::HandleMenu(const FInputActionValue& InputActionValue)
 {
 	if(VRPawn)
 	{
-		VRPawn->HandleMenu(false);
+		VRPawn->HandleMenu();
 	}
 }
 
-void AVrPlayerController::HandleMenuRight(const FInputActionValue& InputActionValue)
-{
-	if(VRPawn)
-	{
-		VRPawn->HandleMenu(true);
-	}
-}

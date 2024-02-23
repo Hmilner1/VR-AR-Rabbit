@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "VRPlayerUIBase.h"
 #include "VRTeleportBase.h"
 #include "GameFramework/Pawn.h"
 #include "Kismet/GameplayStaticsTypes.h"
@@ -25,11 +26,14 @@ public:
 	UFUNCTION()
 	void TurnStarted(double Input);
 	UFUNCTION()
-	void HandleMenu(bool RightHand);
+	void HandleMenu();
 
 	
 	UPROPERTY()
 	TObjectPtr<class USceneComponent> DummyRoot;
+
+	
+	
 	//VR Components
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Controller")
 	UMotionControllerComponent* MotionControllerRight;
@@ -37,8 +41,11 @@ public:
 	UMotionControllerComponent* MotionControllerLeft;
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Camera")
 	UCameraComponent* VrCamera;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Menu")
-	UCameraComponent* temp;
+	UClass* UIClass;
+	UPROPERTY()
+	AVRPlayerUIBase* PlayerUIActor = nullptr;
 
 	
 	//Player Bounds Actor
