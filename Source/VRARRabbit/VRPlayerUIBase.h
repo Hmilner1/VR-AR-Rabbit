@@ -5,6 +5,7 @@
 #include "Components/WidgetComponent.h"
 #include "VRPlayerUIBase.generated.h"
 
+class UMyVRMenu;
 class UUserWidget;
 UCLASS()
 class VRARRABBIT_API AVRPlayerUIBase : public AActor
@@ -14,7 +15,10 @@ public:
 	TObjectPtr<class USceneComponent> DummyRoot;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Menu Widget")
-	UUserWidget* PlayerUI;
+	UUserWidget* UIWidget;
+
+	UPROPERTY()
+	UMyVRMenu* PlayerUI;
 	
 	AVRPlayerUIBase();
 
