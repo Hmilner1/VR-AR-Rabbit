@@ -3,8 +3,6 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
-
-
 void AVrPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
@@ -15,7 +13,7 @@ void AVrPlayerController::OnPossess(APawn* aPawn)
 	VRInputController = Cast<UEnhancedInputComponent>(InputComponent);
 	checkf(VRInputController, TEXT("Unable t get a reference to the EnhancedInputComponent"));
 
-	UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+	InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	checkf(InputSubsystem, TEXT("Unable to get reference to the EnhancedInputLocalPlayerSubsystem."));
 
 	checkf(InputMappingContext, TEXT("InputMappingContent was not specified."));
@@ -27,11 +25,21 @@ void AVrPlayerController::OnPossess(APawn* aPawn)
 		VRInputController->BindAction(ActionMove, ETriggerEvent::Triggered, this, &AVrPlayerController::HandleTriggerMove);
 		VRInputController->BindAction(ActionMove, ETriggerEvent::Started, this, &AVrPlayerController::HandleStartMove);
 		VRInputController->BindAction(ActionMove, ETriggerEvent::Completed, this, &AVrPlayerController::HandleCompletedTrigger);
+	}
+	if(ActionTurn)
+	{
 		VRInputController->BindAction(ActionTurn, ETriggerEvent::Started, this, &AVrPlayerController::HandleTurn);
+	}
+	if(ActionMenuLeft)
+	{
 		VRInputController->BindAction(ActionMenuLeft, ETriggerEvent::Started, this, &AVrPlayerController::HandleMenu);
 		VRInputController->BindAction(ActionMenuRight, ETriggerEvent::Started, this, &AVrPlayerController::HandleMenu);
-		
 	}
+	if(ActionSelect)
+	{
+		VRInputController->BindAction(ActionSelect, ETriggerEvent::Triggered, this, &AVrPlayerController::HandleMenu);
+	}
+
 }
 
 void AVrPlayerController::OnUnPossess()
@@ -83,4 +91,12 @@ void AVrPlayerController::HandleMenu(const FInputActionValue& InputActionValue)
 		VRPawn->HandleMenu();
 	}
 }
+
+//void AVrPlayerController::HandleSelect(const FInputActionValue& InputActionValue)
+//{
+	//if(VRPawn)
+	//{
+	//	VRPawn->PlayerUIActor->MenuSelect();
+	//}
+//}
 

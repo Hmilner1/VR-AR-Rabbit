@@ -3,9 +3,12 @@
 #include "CoreMinimal.h"
 #include "VRPlayerUIBase.h"
 #include "VRTeleportBase.h"
+#include "Components/WidgetInteractionComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Kismet/GameplayStaticsTypes.h"
 #include "VRPlayerPawn.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMenuClosedDelegate);
 
 class UCameraComponent;
 class UMotionControllerComponent;
@@ -27,16 +30,15 @@ public:
 	void TurnStarted(double Input);
 	UFUNCTION()
 	void HandleMenu();
-
 	
 	UPROPERTY()
 	TObjectPtr<class USceneComponent> DummyRoot;
-
-	
 	
 	//VR Components
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Controller")
 	UMotionControllerComponent* MotionControllerRight;
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Controller")
+	UWidgetInteractionComponent* WidgetInteractionRight;
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Controller")
 	UMotionControllerComponent* MotionControllerLeft;
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Camera")
@@ -67,6 +69,8 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Amount to Turn")
 	float TurnSnappingAmount = -45;
 
+	//Delegates
+	FOnMenuClosedDelegate* MenuClosed;
 protected:
 	virtual void BeginPlay() override;
 

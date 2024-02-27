@@ -6,6 +6,7 @@
 #include "InputActionValue.h"
 #include "VrPlayerController.generated.h"
 
+class UEnhancedInputLocalPlayerSubsystem;
 class UInputMappingContext;
 class UEnhancedInputComponent;
 class AVRPlayerPawn;
@@ -28,21 +29,27 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Open Menu Right");
 	TObjectPtr<UInputAction> ActionMenuRight = nullptr;
 
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Movement");
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Menu Select");
+	TObjectPtr<UInputAction> ActionSelect = nullptr;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Mapping Context");
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
+	
+	UEnhancedInputLocalPlayerSubsystem* InputSubsystem = nullptr;
+	
+	UPROPERTY()
+	TObjectPtr<UEnhancedInputComponent> VRInputController = nullptr;
 protected:
 	void HandleStartMove(const FInputActionValue& InputActionValue);
 	void HandleTriggerMove(const FInputActionValue& InputActionValue);
 	void HandleCompletedTrigger(const FInputActionValue& InputActionValue);
 	void HandleTurn(const FInputActionValue& InputActionValue);
 	void HandleMenu(const FInputActionValue& InputActionValue);
+	//void HandleSelect(const FInputActionValue& InputActionValue);
 	
-
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;
 private:
-	UPROPERTY()
-	TObjectPtr<UEnhancedInputComponent> VRInputController = nullptr;
 	UPROPERTY()
 	TObjectPtr<AVRPlayerPawn> VRPawn = nullptr;
 	

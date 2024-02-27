@@ -20,11 +20,13 @@ AVRPlayerPawn::AVRPlayerPawn()
 	//sets up VR objects
 	MotionControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("RightMotionController"));
 	MotionControllerRight->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
+	WidgetInteractionRight = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("RightWidgetComponent"));
+	WidgetInteractionRight->AttachToComponent(MotionControllerRight,FAttachmentTransformRules::KeepRelativeTransform);
+	
 	MotionControllerLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("LeftMotionController"));
 	MotionControllerLeft->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
 	VrCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("VR Camera"));
 	VrCamera->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
-	
 }
 
 void AVRPlayerPawn::BeginPlay()
@@ -55,7 +57,6 @@ void AVRPlayerPawn::Tick(float DeltaTime)
 void AVRPlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 bool AVRPlayerPawn::IsHMDEnabled()
@@ -167,15 +168,21 @@ void AVRPlayerPawn::HandleMenu()
 {
 	if(PlayerUIActor == nullptr)
 	{
+		FVector NewScale = FVector(0.1f, 0.1f, 0.1f);
+		FVector SpawnLocation = MotionControllerLeft->GetRelativeLocation() + FVector(0.0f, 0.0f, 70.0f);
+		
 		PlayerUIActor = GetWorld()->SpawnActor<AVRPlayerUIBase>(UIClass,
-		RootComponent->GetComponentTransform());
+		SpawnLocation, GetActorRotation());
+		
+		PlayerUIActor->SetActorScale3D(NewScale);
+		
 		PlayerUIActor->AttachToComponent(MotionControllerLeft,
 			FAttachmentTransformRules::KeepRelativeTransform);
 	}
 	else if(PlayerUIActor != nullptr)
 	{
-		PlayerUIActor->Destroy();
-		PlayerUIActor = nullptr;
+		MenuClosed->Broadcast();
+		//PlayerUIActor = nullptr;
 	}
 }
 
