@@ -70,7 +70,7 @@ public:
 	float TurnSnappingAmount = -45;
 
 	//Delegates
-	FOnMenuClosedDelegate* MenuClosed;
+	FOnMenuClosedDelegate MenuClosed;
 protected:
 	virtual void BeginPlay() override;
 

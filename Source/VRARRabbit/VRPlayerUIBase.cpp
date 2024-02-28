@@ -8,7 +8,6 @@
 #include "VrPlayerController.h"
 #include "NiagaraDataInterfaceArrayFunctionLibrary.h"
 
-
 AVRPlayerUIBase::AVRPlayerUIBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -46,7 +45,7 @@ void AVRPlayerUIBase::BeginPlay()
 	}
 	if(PlayerPawn)
 	{
-		PlayerPawn->MenuClosed->AddDynamic(this,&AVRPlayerUIBase::RemoveInputSystem);
+		PlayerPawn->MenuClosed.AddDynamic(this,&AVRPlayerUIBase::RemoveInputSystem);
 	}
 }
 
@@ -89,7 +88,7 @@ void AVRPlayerUIBase::MenuSelect()
 
 void AVRPlayerUIBase::RemoveInputSystem()
 {
-	//AVrPlayerController* PlayerController = Cast<AVrPlayerController>(PlayerPawn->GetController());
-	//PlayerController->InputSubsystem->RemoveMappingContext(UiInputMapping);
-	//this->Destroy();
+	AVrPlayerController* PlayerController = Cast<AVrPlayerController>(PlayerPawn->GetController());
+	PlayerController->InputSubsystem->RemoveMappingContext(UiInputMapping);
+	this->Destroy();
 }

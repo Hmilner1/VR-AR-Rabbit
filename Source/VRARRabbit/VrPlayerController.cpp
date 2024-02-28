@@ -37,7 +37,7 @@ void AVrPlayerController::OnPossess(APawn* aPawn)
 	}
 	if(ActionSelect)
 	{
-		VRInputController->BindAction(ActionSelect, ETriggerEvent::Triggered, this, &AVrPlayerController::HandleMenu);
+		VRInputController->BindAction(ActionSelect, ETriggerEvent::Triggered, this, &AVrPlayerController::HandleSelect);
 	}
 
 }
@@ -92,11 +92,11 @@ void AVrPlayerController::HandleMenu(const FInputActionValue& InputActionValue)
 	}
 }
 
-//void AVrPlayerController::HandleSelect(const FInputActionValue& InputActionValue)
-//{
-	//if(VRPawn)
-	//{
-	//	VRPawn->PlayerUIActor->MenuSelect();
-	//}
-//}
+void AVrPlayerController::HandleSelect(const FInputActionValue& InputActionValue)
+{
+	if(VRPawn)
+	{
+		VRPawn->PlayerUIActor->MenuSelect();
+	}
+}
 

@@ -181,8 +181,8 @@ void AVRPlayerPawn::HandleMenu()
 	}
 	else if(PlayerUIActor != nullptr)
 	{
-		MenuClosed->Broadcast();
-		//PlayerUIActor = nullptr;
+		MenuClosed.Broadcast();
+		PlayerUIActor = nullptr;
 	}
 }
 

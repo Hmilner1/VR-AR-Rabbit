@@ -9,14 +9,22 @@ UCLASS()
 class VRARRABBIT_API UMyVRMenu : public UUserWidget
 {
 public:
-	UPROPERTY(EditAnywhere, meta=(BindWidget))
-	UButton* ExitButton;
-
-	UPROPERTY(EditAnywhere, meta=(BindWidget))
-	UButton* ARButton;
 
 protected:
+	
+	UFUNCTION()
+	void SwapVRMode();
+	UFUNCTION()
+	void ExitGame();
+	
+	virtual void NativeConstruct() override;
 
+	
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	UButton* ExitButton;
+
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	UButton* ARButton;
 private:
 	
 	GENERATED_BODY()

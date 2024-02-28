@@ -45,10 +45,11 @@ protected:
 	void HandleCompletedTrigger(const FInputActionValue& InputActionValue);
 	void HandleTurn(const FInputActionValue& InputActionValue);
 	void HandleMenu(const FInputActionValue& InputActionValue);
-	//void HandleSelect(const FInputActionValue& InputActionValue);
+	void HandleSelect(const FInputActionValue& InputActionValue);
 	
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;
+	
 private:
 	UPROPERTY()
 	TObjectPtr<AVRPlayerPawn> VRPawn = nullptr;
