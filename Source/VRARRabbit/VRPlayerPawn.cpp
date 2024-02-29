@@ -94,11 +94,11 @@ void AVRPlayerPawn::MoveTriggered()
 	TArray<FVector>ConvertedPath = ConvertPathDataArray(TracePath);
 	ConvertedPath.Insert(ControllerWorldPosition, 0);
 	
-	if(ValidateTeleportPosition(HitResults))
-	{
-		TeleportVisual->SetActorHiddenInGame(false);
-	}
-	TeleportVisual->SetActorLocation(ProjectedPoint);
+	//if(ValidateTeleportPosition(HitResults))
+	//{
+	//	TeleportVisual->SetActorHiddenInGame(false);
+	//}
+	//TeleportVisual->SetActorLocation(ProjectedPoint);
 	DrawLineTrace(ConvertedPath, ControllerWorldPosition); 
 	
 }
@@ -107,14 +107,14 @@ void AVRPlayerPawn::MoveStarted()
 {
 	NiagraComponentLineTrace->SetVisibility(true);
 	
-	TeleportVisual = GetWorld()->SpawnActor<AVRTeleportBase>(TeleportVisualActorComponent,
-		RootComponent->GetComponentTransform());
-	TeleportVisual->SetActorHiddenInGame(true);
+	//TeleportVisual = GetWorld()->SpawnActor<AVRTeleportBase>(TeleportVisualActorComponent,
+	//	RootComponent->GetComponentTransform());
+	//TeleportVisual->SetActorHiddenInGame(true);
 }
 
 void AVRPlayerPawn::MoveCompleted()
 {
-	TeleportVisual->Destroy();
+	//TeleportVisual->Destroy();
 	NiagraComponentLineTrace->SetVisibility(false);
 
 	
@@ -214,12 +214,12 @@ bool AVRPlayerPawn::ValidateTeleportPosition(FPredictProjectilePathResult HitRes
 	
 	if(ValidTeleportLocation)
 	{
-		TeleportVisual->SetActorHiddenInGame(false);
+		//TeleportVisual->SetActorHiddenInGame(false);
 		return true;
 	}
 	if(!ValidTeleportLocation)
 	{
-		TeleportVisual->SetActorHiddenInGame(true);
+		//TeleportVisual->SetActorHiddenInGame(true);
 	}
 	return false;
 }
