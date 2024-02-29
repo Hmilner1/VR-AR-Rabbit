@@ -32,3 +32,8 @@ void ARabbitAICharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 }
 
+UBehaviorTree* ARabbitAICharacter::GetTree() const
+{
+	return BehaviorTree;
+}
+
