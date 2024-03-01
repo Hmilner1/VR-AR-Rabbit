@@ -90,6 +90,10 @@ private:
 	bool ValidateTeleportPosition(FPredictProjectilePathResult HitResults);
 	UFUNCTION()
 	bool IsHMDEnabled();
+
+	class UAIPerceptionStimuliSourceComponent* StimSource;
+
+	void SetupStimSource();
 	
 	GENERATED_BODY()
 };

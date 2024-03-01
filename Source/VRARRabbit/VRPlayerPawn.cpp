@@ -8,6 +8,8 @@
 #include "Camera/CameraComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
 
 AVRPlayerPawn::AVRPlayerPawn()
 {
@@ -27,6 +29,8 @@ AVRPlayerPawn::AVRPlayerPawn()
 	MotionControllerLeft->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
 	VrCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("VR Camera"));
 	VrCamera->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
+
+	SetupStimSource();
 }
 
 void AVRPlayerPawn::BeginPlay()
@@ -59,6 +63,17 @@ void AVRPlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+void AVRPlayerPawn::SetupStimSource()
+{
+	StimSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>("Stimulus");
+
+	if(StimSource)
+	{
+		StimSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
+		StimSource->RegisterWithPerceptionSystem();
+	}
+}
+
 bool AVRPlayerPawn::IsHMDEnabled()
 {
 	if (UGameViewportClient* GameViewportClient = GEngine->GameViewport)
@@ -67,6 +82,7 @@ bool AVRPlayerPawn::IsHMDEnabled()
 	}
 	return false;
 }
+
 
 void AVRPlayerPawn::MoveTriggered()
 {

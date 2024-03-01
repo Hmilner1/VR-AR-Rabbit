@@ -13,5 +13,16 @@ UCLASS()
 class VRARRABBIT_API UMyBTTask_Follow : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
+
+public:
+	explicit UMyBTTask_Follow(FObjectInitializer const& ObjectInitializer);
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI", meta=(AllowPrivateAccess="true"))
+	bool Search = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI", meta=(AllowPrivateAccess="true"))
+	float Radius = 150.f;
 	
 };

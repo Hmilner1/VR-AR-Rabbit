@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Perception/AIPerceptionTypes.h"
 #include "Rabbit_AiController.generated.h"
 
 
@@ -19,6 +20,12 @@ public:
 protected:
 
 private:
+	class UAISenseConfig_Sight* RabbitSight;
+	
+	void RabbitSightSetup();
+
+	UFUNCTION()
+	void OnTargetSeen(AActor* Player, FAIStimulus const Stimulus);
 	
 	
 };

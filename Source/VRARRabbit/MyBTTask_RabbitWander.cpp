@@ -36,5 +36,4 @@ EBTNodeResult::Type UMyBTTask_RabbitWander::ExecuteTask(UBehaviorTreeComponent& 
 		}
 	}
 	return EBTNodeResult::Failed;
-	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }
