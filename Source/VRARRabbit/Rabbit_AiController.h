@@ -20,12 +20,27 @@ public:
 protected:
 
 private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI", meta=(AllowPrivateAccess="true"))
+	float RabbitSightRadius = 50;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI", meta=(AllowPrivateAccess="true"))
+	float RabbitLoseRadius = 75;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI", meta=(AllowPrivateAccess="true"))
+	float RabbitVisionAngle = 360;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI", meta=(AllowPrivateAccess="true"))
+	float RabbitHearingRage = 1000;
+	
+	
 	class UAISenseConfig_Sight* RabbitSight;
+	class UAISenseConfig_Hearing* RabbitHearing;
 	
 	void RabbitSightSetup();
+	void RabbitHearingSetup();
 
 	UFUNCTION()
 	void OnTargetSeen(AActor* Player, FAIStimulus const Stimulus);
+	UFUNCTION()
+	void OnTargetHeard(AActor* Player, FAIStimulus const Stimulus);
 	
 	
 };

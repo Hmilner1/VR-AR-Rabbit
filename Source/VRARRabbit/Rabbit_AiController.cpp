@@ -1,17 +1,17 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Rabbit_AiController.h"
 #include "RabbitAICharacter.h"
 #include "VRPlayerPawn.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Hearing.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "Perception/AISense_Hearing.h"
 
 ARabbit_AiController::ARabbit_AiController(FObjectInitializer const& ObjectInitializer)
 {
 	RabbitSightSetup();
+	RabbitHearingSetup();
 }
 
 void ARabbit_AiController::OnPossess(APawn* InPawn)
@@ -36,20 +36,34 @@ void ARabbit_AiController::RabbitSightSetup()
 	if(RabbitSight)
 	{
 		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception")));
-		RabbitSight->SightRadius = 500.f;
-		RabbitSight->LoseSightRadius = 575.f;
-		RabbitSight->PeripheralVisionAngleDegrees = 180.f;
+		RabbitSight->SightRadius = RabbitSightRadius;
+		RabbitSight->LoseSightRadius = RabbitLoseRadius;
+		RabbitSight->PeripheralVisionAngleDegrees = RabbitVisionAngle;
 		RabbitSight->SetMaxAge(5.0f);
-		RabbitSight->AutoSuccessRangeFromLastSeenLocation = 570.f;
+		RabbitSight->AutoSuccessRangeFromLastSeenLocation = 70.f;
 		RabbitSight->DetectionByAffiliation.bDetectNeutrals = true;
 		RabbitSight->DetectionByAffiliation.bDetectFriendlies = true;
 		RabbitSight->DetectionByAffiliation.bDetectEnemies = true;
 
-
-
-		GetPerceptionComponent()->SetDominantSense(*RabbitSight->GetSenseImplementation());
+		//GetPerceptionComponent()->SetDominantSense(*RabbitSight->GetSenseImplementation());
 		GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &ARabbit_AiController::OnTargetSeen);
 		GetPerceptionComponent()->ConfigureSense(*RabbitSight);
+	}
+}
+
+void ARabbit_AiController::RabbitHearingSetup()
+{
+	RabbitHearing = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("Hearing Config"));
+	if(RabbitHearing)
+	{
+		RabbitHearing->HearingRange = RabbitHearingRage;
+		RabbitHearing->DetectionByAffiliation.bDetectNeutrals = true;
+		RabbitHearing->DetectionByAffiliation.bDetectFriendlies = true;
+		RabbitHearing->DetectionByAffiliation.bDetectEnemies = true;
+
+		GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &ARabbit_AiController::OnTargetHeard);
+		GetPerceptionComponent()->ConfigureSense(*RabbitHearing);
+		
 	}
 }
 
@@ -58,5 +72,13 @@ void ARabbit_AiController::OnTargetSeen(AActor* Player, FAIStimulus const Stimul
 	if(AVRPlayerPawn* const PlayerPawn = Cast<AVRPlayerPawn>(Player))
 	{
 		GetBlackboardComponent()->SetValueAsBool("PlayerSeen", Stimulus.WasSuccessfullySensed());
+	}
+}
+
+void ARabbit_AiController::OnTargetHeard(AActor* Player, FAIStimulus const Stimulus)
+{
+	if(AVRPlayerPawn* const PlayerPawn = Cast<AVRPlayerPawn>(Player))
+	{
+		GetBlackboardComponent()->SetValueAsBool("PlayerHeard", Stimulus.WasSuccessfullySensed());
 	}
 }

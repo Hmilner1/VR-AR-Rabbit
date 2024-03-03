@@ -32,6 +32,9 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Menu Select");
 	TObjectPtr<UInputAction> ActionSelect = nullptr;
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Menu Select");
+	TObjectPtr<UInputAction> ActionWhistle = nullptr;
+
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Player Inputs, Mapping Context");
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 	
@@ -46,6 +49,7 @@ protected:
 	void HandleTurn(const FInputActionValue& InputActionValue);
 	void HandleMenu(const FInputActionValue& InputActionValue);
 	void HandleSelect(const FInputActionValue& InputActionValue);
+	void HandleWhistle(const FInputActionValue& InputActionValue);
 	
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;

@@ -30,6 +30,8 @@ public:
 	void TurnStarted(double Input);
 	UFUNCTION()
 	void HandleMenu();
+	UFUNCTION()
+	void HandleWhistle();
 	
 	UPROPERTY()
 	TObjectPtr<class USceneComponent> DummyRoot;
@@ -43,6 +45,9 @@ public:
 	UMotionControllerComponent* MotionControllerLeft;
 	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Camera")
 	UCameraComponent* VrCamera;
+	UAudioComponent* AudioComponent;
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Whistle Audio")
+	USoundCue* WhistleSound;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI Menu")
 	UClass* UIClass;

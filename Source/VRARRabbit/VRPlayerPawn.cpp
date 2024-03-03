@@ -7,9 +7,12 @@
 #include "NiagaraDataInterfaceArrayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
+#include "Components/AudioComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Hearing.h"
 #include "Perception/AISense_Sight.h"
+#include "Sound/SoundCue.h"
 
 AVRPlayerPawn::AVRPlayerPawn()
 {
@@ -29,6 +32,10 @@ AVRPlayerPawn::AVRPlayerPawn()
 	MotionControllerLeft->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
 	VrCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("VR Camera"));
 	VrCamera->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
+	
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio Component"));
+	AudioComponent->SetupAttachment(RootComponent); 
+	AudioComponent->bAutoActivate = false;
 
 	SetupStimSource();
 }
@@ -70,6 +77,7 @@ void AVRPlayerPawn::SetupStimSource()
 	if(StimSource)
 	{
 		StimSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
+		StimSource->RegisterForSense(TSubclassOf<UAISense_Hearing>());
 		StimSource->RegisterWithPerceptionSystem();
 	}
 }
@@ -200,6 +208,16 @@ void AVRPlayerPawn::HandleMenu()
 		MenuClosed.Broadcast();
 		PlayerUIActor = nullptr;
 	}
+}
+
+void AVRPlayerPawn::HandleWhistle()
+{
+	if (AudioComponent)
+	{
+		AudioComponent->SetSound(WhistleSound);
+		AudioComponent->Play();
+	}
+	MakeNoise(1000.f,this, GetActorLocation());
 }
 
 void AVRPlayerPawn::DrawLineTrace(TArray<FVector> Path, FVector StartPos )
