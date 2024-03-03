@@ -12,6 +12,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMenuClosedDelegate);
 
 class UCameraComponent;
 class UMotionControllerComponent;
+class USoundCue;
+class UAIPerceptionStimuliSourceComponent;
 UCLASS()
 class VRARRABBIT_API AVRPlayerPawn : public APawn
 {
@@ -56,10 +58,10 @@ public:
 
 	
 	//Player Bounds Actor
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportActor")
-	//UClass* TeleportVisualActorComponent;
-	//UPROPERTY()
-	//AVRTeleportBase* TeleportVisual;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportActor")
+	UClass* TeleportVisualActorComponent;
+	UPROPERTY()
+	AVRTeleportBase* TeleportVisual;
 	//Line Trace
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Niagara")
 	UNiagaraSystem* NiagraLineTrace;
@@ -96,7 +98,7 @@ private:
 	UFUNCTION()
 	bool IsHMDEnabled();
 
-	class UAIPerceptionStimuliSourceComponent* StimSource;
+	UAIPerceptionStimuliSourceComponent* StimSource;
 
 	void SetupStimSource();
 	
