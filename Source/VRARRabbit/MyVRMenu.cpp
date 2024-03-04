@@ -15,7 +15,7 @@ void UMyVRMenu::SwapVRMode()
 {
 	if(UGameplayStatics::GetCurrentLevelName(GetWorld(),true) == FName("VRTestLevel"))
 	{
-		UGameplayStatics::OpenLevel(GetWorld(), FName("VRTemplateMap"));
+		UGameplayStatics::OpenLevel(GetWorld(), FName("PassThrough"));
 	}
 	else
 	{

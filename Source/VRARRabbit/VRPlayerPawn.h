@@ -58,10 +58,10 @@ public:
 
 	
 	//Player Bounds Actor
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportActor")
-	UClass* TeleportVisualActorComponent;
-	UPROPERTY()
-	AVRTeleportBase* TeleportVisual;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TeleportActor")
+	//UClass* TeleportVisualActorComponent;
+	//UPROPERTY()
+	//AVRTeleportBase* TeleportVisual;
 	//Line Trace
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Niagara")
 	UNiagaraSystem* NiagraLineTrace;
