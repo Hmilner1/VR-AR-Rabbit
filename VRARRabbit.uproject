@@ -24,6 +24,14 @@
 				"Win64",
 				"Android"
 			]
+		},
+		{
+			"Name": "MRUtilityKit",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Android"
+			]
 		}
 	],
 	"TargetPlatforms": [
